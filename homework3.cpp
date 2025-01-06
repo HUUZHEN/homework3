@@ -1,19 +1,19 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-
-// ¦¨­ûµ²ºc
+,
+// æˆå“¡çµæ§‹
 struct Node {
-    int coef;    // «Y¼Æ
-    int exp;     // «ü¼Æ
-    Node* link;  // «ü¦V¤U¤@­Ó¸`ÂIªº«ü¼Ğ
+    int coef;    // ä¿‚æ•¸
+    int exp;     // æŒ‡æ•¸
+    Node* link;  // æŒ‡å‘ä¸‹ä¸€å€‹ç¯€é»çš„æŒ‡æ¨™
 };
 
 class Polynomial {
 private:
     Node* head;
 
-    // ²M°£©Ò¦³¸`ÂI
+    // æ¸…é™¤æ‰€æœ‰ç¯€é»
     void clear() {
         Node* curr = head->link;
         while (curr != head) {
@@ -25,7 +25,7 @@ private:
     }
 
 public:
-    // ¹w³]«Øºc¤l
+    // é è¨­å»ºæ§‹å­
     Polynomial() {
         head = new Node;
         head->coef = 0;
@@ -33,14 +33,14 @@ public:
         head->link = head;
     }
 
-    // ¸Ñºc¤l
+    // è§£æ§‹å­
     ~Polynomial() {
         clear();
         delete head;
         head = nullptr;
     }
 
-    // «ş¨©«Øºc¤l
+    // æ‹·è²å»ºæ§‹å­
     Polynomial(const Polynomial& other) {
         head = new Node;
         head->coef = 0;
@@ -49,7 +49,7 @@ public:
         *this = other;
     }
 
-    // ½á­È¹Bºâ¤l
+    // è³¦å€¼é‹ç®—å­
     Polynomial& operator=(const Polynomial& other) {
         if (this == &other) return *this;
         clear();
@@ -67,7 +67,7 @@ public:
         return *this;
     }
 
-    // Åª¨ú¦h¶µ¦¡
+    // è®€å–å¤šé …å¼
     istream& readPolynomial(istream& is) {
         int n;
         is >> n;
@@ -85,7 +85,7 @@ public:
         return is;
     }
 
-    // ¿é¥X¦h¶µ¦¡
+    // è¼¸å‡ºå¤šé …å¼
     ostream& printPolynomial(ostream& os) const {
         Node* curr = head->link;
         bool isFirst = true;
@@ -111,7 +111,7 @@ public:
         return os;
     }
 
-    // ¥[ªk¹Bºâ
+    // åŠ æ³•é‹ç®—
     Polynomial operator+(const Polynomial& b) const {
         Polynomial result;
         Node* tail = result.head;
@@ -160,7 +160,7 @@ public:
         return result;
     }
 
-    // ´îªk¹Bºâ
+    // æ¸›æ³•é‹ç®—
     Polynomial operator-(const Polynomial& b) const {
         Polynomial result;
         Node* tail = result.head;
@@ -209,7 +209,7 @@ public:
         return result;
     }
 
-    // ­¼ªk¹Bºâ
+    // ä¹˜æ³•é‹ç®—
     Polynomial operator*(const Polynomial& b) const {
         Polynomial result;
         Node* p1 = this->head->link;
@@ -220,7 +220,7 @@ public:
                 int c = p1->coef * p2->coef;
                 int e = p1->exp + p2->exp;
 
-                // ¦X¨Ö¦P«ü¼Æªº¶µ
+                // åˆä½µåŒæŒ‡æ•¸çš„é …
                 Node* curr = result.head->link;
                 Node* prev = result.head;
                 bool found = false;
@@ -250,7 +250,7 @@ public:
         return result;
     }
 
-    // ¦h¶µ¦¡¨D­È
+    // å¤šé …å¼æ±‚å€¼
     float Evaluate(float x) const {
         float sum = 0.0f;
         Node* curr = head->link;
@@ -262,21 +262,21 @@ public:
     }
 };
 
-// ¦h¶µ¦¡¿é¤J¹Bºâ¤l
+// å¤šé …å¼è¼¸å…¥é‹ç®—å­
 istream& operator>>(istream& is, Polynomial& p) {
     return p.readPolynomial(is);
 }
 
-// ¦h¶µ¦¡¿é¥X¹Bºâ¤l
+// å¤šé …å¼è¼¸å‡ºé‹ç®—å­
 ostream& operator<<(ostream& os, const Polynomial& p) {
     return p.printPolynomial(os);
 }
 
 int main() {
     Polynomial p1, p2;
-    cout << "¿é¤J²Ä¤@­Ó¦h¶µ¦¡:(²Ä¤@­Ó¼Æ¿é¤J¶µ¼Æ «á­±´N¿é¤J«Y¼Æ©M«ü¼Æ) ";
+    cout << "è¼¸å…¥ç¬¬ä¸€å€‹å¤šé …å¼:(ç¬¬ä¸€å€‹æ•¸è¼¸å…¥é …æ•¸ å¾Œé¢å°±è¼¸å…¥ä¿‚æ•¸å’ŒæŒ‡æ•¸) ";
     cin >> p1;
-    cout << "¿é¤J²Ä¤G­Ó¦h¶µ¦¡:(²Ä¤@­Ó¼Æ¿é¤J¶µ¼Æ «á­±´N¿é¤J«Y¼Æ©M«ü¼Æ) ";
+    cout << "è¼¸å…¥ç¬¬äºŒå€‹å¤šé …å¼:(ç¬¬ä¸€å€‹æ•¸è¼¸å…¥é …æ•¸ å¾Œé¢å°±è¼¸å…¥ä¿‚æ•¸å’ŒæŒ‡æ•¸) ";
     cin >> p2;
 
     cout << "p1 = " << p1 << endl;
@@ -291,7 +291,7 @@ int main() {
     cout << "p1 * p2 = " << mule << endl;
 
     float x;
-    cout << "¿é¤J x ­È: ";
+    cout << "è¼¸å…¥ x å€¼: ";
     cin >> x;
     cout << "p1(" << x << ") = " << p1.Evaluate(x) << endl;
     cout << "p2(" << x << ") = " << p2.Evaluate(x) << endl;
