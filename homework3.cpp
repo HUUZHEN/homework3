@@ -1,7 +1,8 @@
 #include <iostream>
 #include <cmath>
+
 using namespace std;
-,
+
 // 成員結構
 struct Node {
     int coef;    // 係數
@@ -41,12 +42,23 @@ public:
     }
 
     // 拷貝建構子
-    Polynomial(const Polynomial& other) {
+    Polynomial copy(const Polynomial& a) {
         head = new Node;
         head->coef = 0;
         head->exp = -1;
         head->link = head;
-        *this = other;
+
+        Node* tail = head;
+        Node* curr = a.head->link;
+        while (curr != a.head) {
+            Node* newNode = new Node;
+            newNode->coef = curr->coef;
+            newNode->exp = curr->exp;
+            newNode->link = head;
+            tail->link = newNode;
+            tail = newNode;
+            curr = curr->link;
+        }
     }
 
     // 賦值運算子
@@ -290,7 +302,7 @@ int main() {
     cout << "p1 - p2 = " << diff << endl;
     cout << "p1 * p2 = " << mule << endl;
 
-    float x;
+    double x;
     cout << "輸入 x 值: ";
     cin >> x;
     cout << "p1(" << x << ") = " << p1.Evaluate(x) << endl;
@@ -300,3 +312,54 @@ int main() {
     cout << "(p1 * p2)(" << x << ") = " << mule.Evaluate(x) << endl;
     return 0;
 }
+/*作業 3
+
+[程式設計專案]
+開發一個 C++ 類別 Polynomial，用來表示和操作具有整數係數的單變數多項式（使用具有頭節點的循環鏈結串列）。每個多項式的每一項將表示為一個節點。因此，這個系統中的節點將有以下三個資料成員：
+
+coef : 係數
+exp : 指數
+link : 指向下一個節點的指標
+每個多項式應表示為具有頭節點的循環鏈結串列。為了有效地刪除多項式，需要使用第 4.5 節中描述的可用空間表（available - space list）和相關函數。單變數多項式的外部（即用於輸入或輸出）表示將假設為由以下形式的整數序列組成：
+n, c₁, e₁, c₂, e₂, c₃, e₃, ..., cₙ, eₙ，其中 eᵢ 代表指數，cᵢ 代表係數，n 表示多項式的項數。指數以遞減順序排列：
+e₁ > e₂ > ... > eₙ。
+
+撰寫並測試以下函數：
+
+istream& operator>>(istream& is, Polynomial& x) :
+    從輸入中讀取多項式並將其轉換為使用頭節點的循環鏈結串列表示。
+
+    ostream& operator<<(ostream& os, Polynomial& x) :
+    將多項式從鏈結串列表示轉換為其外部表示並輸出。
+
+    Polynomial::Polynomial(const Polynomial& a) :
+    [拷貝建構子]
+    將多項式 a 初始化到多項式* this。
+
+    const Polynomial& Polynomial::operator=(const Polynomial& a) const :
+    [賦值運算子]
+    將多項式 a 賦值給多項式* this。
+
+    Polynomial::~Polynomial() :
+    [解構子]
+    將多項式* this 的所有節點返回到可用空間表。
+
+    Polynomial operator+(const Polynomial& b) :
+    [加法]
+    創建並返回多項式* this + b。
+
+    Polynomial operator-(const Polynomial & b) :
+    [減法]
+    創建並返回多項式 * this - b。
+
+    Polynomial operator(const Polynomial & b) : *
+    [乘法]
+    創建並返回多項式 * this * b。
+
+    Polynomial::Evaluate(float x) const :
+    [多項式求值]
+    計算並返回多項式 * this 在 x 處的值。*/
+
+
+
+
